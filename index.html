@@ -1,53 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Flores Amarillas 💛</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>Flores Amarillas 💛</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<canvas id="stars"></canvas>
-<div class="vignette"></div>
 
-<main class="scene">
-  <div class="title">
-    <h1>Para ti 💛</h1>
-  </div>
+    <!-- Fondo de estrellas -->
+    <canvas id="stars"></canvas>
 
-  <div class="orbit">
-    <div class="item i1"><b>🌻</b><span>Te Quiero Mucho 💛</span></div>
-    <div class="item i2"><b>💐</b><span>Eres una gran persona</span></div>
-    <div class="item i3"><b>🌼</b><span>Te adoro 💛</span></div>
-    <div class="item i4"><b>🌻</b><span>Nunca cambies</span></div>
-    <div class="item i5"><b>💛</b><span>My Love</span></div>
-    <div class="item i6"><b>🌻</b><span>Para Ti</span></div>
-    <div class="item i7"><b>💐</b><span>Eres única ✨</span></div>
-    <div class="item i8"><b>🌼</b><span>Una en un millón</span></div>
-  </div>
+    <div class="vignette"></div>
 
-  <section class="centerpiece">
-    <div class="heart" id="heart"></div>
-    <div class="love">Glendy 💛</div>
-    <div class="beam"></div>
-    <div class="portal"><div></div><div></div><div></div></div>
-  </section>
 
-  <button id="surprise">Toca aquí 💛</button>
-</main>
+    <main class="scene">
 
-<div class="modal" id="modal">
-  <div class="letter">
-    <button id="close">×</button>
-    <div class="sunflower">🌻</div>
-    <small>UN DETALLE PARA TI</small>
-    <h2>Flores amarillas</h2>
-    <p>No necesitaba una fecha especial para recordarte lo especial que eres, pero hoy quería regalarte un pequeño detalle hecho con cariño.</p>
-    <p>Que nunca te falten motivos para sonreír, sueños por cumplir y personas que hagan tus días más bonitos.</p>
-    <strong>Para ti, con mucho amor 💛</strong>
-  </div>
-</div>
+        <!-- TÍTULO -->
+        <div class="title">
+            <h1>Para ti 💛</h1>
+        </div>
 
-<script src="script.js"></script>
+
+        <!-- =========================
+             MUNDO 3D
+             ========================= -->
+        <div class="world" id="world">
+
+
+            <!-- FRASES Y FLORES -->
+            <div class="orbit">
+
+                <div class="item i1">
+                    <div class="floating">
+                        <b>🌻</b>
+                        <span>Te Quiero Mucho 💛</span>
+                    </div>
+                </div>
+
+                <div class="item i2">
+                    <div class="floating">
+                        <b>💐</b>
+                        <span>Eres una gran persona</span>
+                    </div>
+                </div>
+
+                <div class="item i3">
+                    <div class="floating">
+                        <b>🌼</b>
+                        <span>Te adoro 💛</span>
+                    </div>
+                </div>
+
+                <div class="item i4">
+                    <div class="floating">
+                        <b>🌻</b>
+                        <span>Nunca cambies</span>
+                    </div>
+                </div>
+
+                <div class="item i5">
+                    <div class="floating">
+                        <b>💛</b>
+                        <span>My Love</span>
+                    </div>
+                </div>
+
+                <div class="item i6">
+                    <div class="floating">
+                        <b>🌻</b>
+                        <span>Para Ti</span>
+                    </div>
+                </div>
+
+                <div class="item i7">
+                    <div class="floating">
+                        <b>💐</b>
+                        <span>Eres única ✨</span>
+                    </div>
+                </div>
+
+                <div class="item i8">
+                    <div class="floating">
+                        <b>🌼</b>
+                        <span>Una en un millón</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CORAZÓN CENTRAL -->
+            <section class="centerpiece">
+
+                <div class="heart" id="heart"></div>
+
+                <div class="love">
+                    Glendy 💛
+                </div>
+
+                <div class="beam"></div>
+
+                <div class="portal">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- INDICACIÓN -->
+        <div class="drag-hint">
+            ↔ Desliza para explorar
+        </div>
+
+
+        <!-- BOTÓN DE SORPRESA -->
+        <button id="surprise">
+            Toca aquí 💛
+        </button>
+
+    </main>
+
+
+    <!-- =========================
+         CARTA
+         ========================= -->
+
+    <div class="modal" id="modal">
+
+        <div class="letter">
+
+            <button id="close">×</button>
+
+            <div class="sunflower">
+                🌻
+            </div>
+
+            <small>
+                UN DETALLE PARA TI
+            </small>
+
+            <h2>
+                Flores amarillas
+            </h2>
+
+            <p>
+                No necesitaba una fecha especial para recordarte
+                lo especial que eres, pero hoy quería regalarte
+                un pequeño detalle hecho con cariño.
+            </p>
+
+            <p>
+                Que nunca te falten motivos para sonreír,
+                sueños por cumplir y personas que hagan
+                tus días más bonitos.
+            </p>
+
+            <strong>
+                Para ti, con mucho amor 💛
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
 </body>
 </html>
+
