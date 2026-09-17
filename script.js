@@ -11,11 +11,8 @@ const ctx =
 
 let W;
 let H;
-
 let particles = [];
 
-
-/* Ajustar canvas */
 
 function resize() {
 
@@ -31,13 +28,12 @@ function resize() {
 }
 
 
-/* Crear estrellas */
-
 function makeStars() {
 
     particles =
         Array.from(
             { length: 180 },
+
             () => ({
 
                 x:
@@ -59,8 +55,6 @@ function makeStars() {
 }
 
 
-/* Dibujar estrellas */
-
 function draw() {
 
     ctx.clearRect(
@@ -73,6 +67,7 @@ function draw() {
 
     const g =
         ctx.createRadialGradient(
+
             W / 2,
             H * .5,
             0,
@@ -101,6 +96,7 @@ function draw() {
 
 
     ctx.fillStyle = g;
+
 
     ctx.fillRect(
         0,
@@ -157,16 +153,20 @@ function draw() {
     );
 
 
-    requestAnimationFrame(draw);
+    requestAnimationFrame(
+        draw
+    );
 }
 
 
 resize();
 
+
 window.addEventListener(
     "resize",
     resize
 );
+
 
 draw();
 
@@ -301,6 +301,7 @@ function rain(n = 35) {
 
 
         e.style.setProperty(
+
             "--drift",
 
             (
@@ -324,7 +325,7 @@ function rain(n = 35) {
 
 
 /* ==========================================
-   CARTA SORPRESA
+   CARTA
    ========================================== */
 
 const modal =
@@ -379,8 +380,6 @@ modal.addEventListener(
 );
 
 
-/* ESC para cerrar en PC */
-
 document.addEventListener(
     "keydown",
     e => {
@@ -407,17 +406,58 @@ setInterval(
     5000
 );
 
+
 rain(15);
 
 
 
 /* ==========================================
-   MUNDO 3D INTERACTIVO
+   SISTEMA 3D
    ========================================== */
 
 const world =
     document.getElementById("world");
 
+
+const items =
+    [
+        ...document.querySelectorAll(
+            ".item"
+        )
+    ];
+
+
+/*
+   PROFUNDIDAD ORIGINAL DE CADA FLOR
+
+   Positivos = delante
+   Negativos = detrás
+*/
+
+const itemDepths = [
+
+    130,     // i1
+
+    -100,    // i2
+
+    180,     // i3
+
+    -150,    // i4
+
+    110,     // i5
+
+    -180,    // i6
+
+    150,     // i7
+
+    -120     // i8
+];
+
+
+
+/* ==========================================
+   ROTACIÓN
+   ========================================== */
 
 let rotationY = 0;
 
@@ -437,12 +477,10 @@ let lastY = 0;
 let dragging = false;
 
 
-/*
-   Velocidad de giro.
 
-   Si después querés que gire
-   más rápido, aumentamos esto.
-*/
+/* ==========================================
+   SENSIBILIDAD
+   ========================================== */
 
 const horizontalSensitivity =
     0.42;
@@ -452,7 +490,6 @@ const verticalSensitivity =
     0.13;
 
 
-/* Limitar inclinación vertical */
 
 function limit(
     value,
@@ -461,10 +498,12 @@ function limit(
 ) {
 
     return Math.min(
+
         Math.max(
             value,
             min
         ),
+
         max
     );
 }
@@ -472,7 +511,7 @@ function limit(
 
 
 /* ==========================================
-   INICIAR ARRASTRE
+   ARRASTRE
    ========================================== */
 
 function startDrag(
@@ -495,16 +534,13 @@ function startDrag(
 
 
 
-/* ==========================================
-   MOVER
-   ========================================== */
-
 function moveDrag(
     x,
     y
 ) {
 
     if (!dragging) {
+
         return;
     }
 
@@ -518,13 +554,7 @@ function moveDrag(
 
 
     /*
-       Horizontal:
-
-       No tiene límite.
-
-       Por eso se puede
-       seguir girando 360°,
-       720°, etc.
+       GIRO HORIZONTAL LIBRE
     */
 
     targetRotationY +=
@@ -533,10 +563,7 @@ function moveDrag(
 
 
     /*
-       Vertical:
-
-       Lo limitamos para
-       que no se voltee todo.
+       INCLINACIÓN VERTICAL
     */
 
     targetRotationX -=
@@ -546,8 +573,11 @@ function moveDrag(
 
     targetRotationX =
         limit(
+
             targetRotationX,
+
             -10,
+
             10
         );
 
@@ -558,10 +588,6 @@ function moveDrag(
 }
 
 
-
-/* ==========================================
-   FINALIZAR ARRASTRE
-   ========================================== */
 
 function endDrag() {
 
@@ -576,7 +602,7 @@ function endDrag() {
 
 
 /* ==========================================
-   MOUSE - COMPUTADORA
+   MOUSE
    ========================================== */
 
 world.addEventListener(
@@ -584,7 +610,9 @@ world.addEventListener(
     e => {
 
         startDrag(
+
             e.clientX,
+
             e.clientY
         );
     }
@@ -596,7 +624,9 @@ window.addEventListener(
     e => {
 
         moveDrag(
+
             e.clientX,
+
             e.clientY
         );
     }
@@ -609,9 +639,6 @@ window.addEventListener(
 );
 
 
-
-/* Evitar arrastre nativo */
-
 world.addEventListener(
     "dragstart",
     e => {
@@ -623,16 +650,18 @@ world.addEventListener(
 
 
 /* ==========================================
-   TOUCH - CELULAR
+   CELULAR
    ========================================== */
 
 world.addEventListener(
     "touchstart",
+
     e => {
 
         if (
             e.touches.length !== 1
         ) {
+
             return;
         }
 
@@ -642,7 +671,9 @@ world.addEventListener(
 
 
         startDrag(
+
             touch.clientX,
+
             touch.clientY
         );
     },
@@ -653,14 +684,17 @@ world.addEventListener(
 );
 
 
+
 world.addEventListener(
     "touchmove",
+
     e => {
 
         if (
             !dragging ||
             e.touches.length !== 1
         ) {
+
             return;
         }
 
@@ -670,7 +704,9 @@ world.addEventListener(
 
 
         moveDrag(
+
             touch.clientX,
+
             touch.clientY
         );
     },
@@ -681,8 +717,10 @@ world.addEventListener(
 );
 
 
+
 world.addEventListener(
     "touchend",
+
     endDrag,
 
     {
@@ -693,6 +731,7 @@ world.addEventListener(
 
 world.addEventListener(
     "touchcancel",
+
     endDrag,
 
     {
@@ -703,16 +742,136 @@ world.addEventListener(
 
 
 /* ==========================================
-   ANIMACIÓN SUAVE DEL MUNDO
+   ACTUALIZAR FLORES
+   ========================================== */
+
+function updateItems() {
+
+    /*
+       Convertimos el giro actual
+       a radianes para calcular
+       profundidad visual.
+    */
+
+    const radians =
+        rotationY
+        * Math.PI
+        / 180;
+
+
+    items.forEach(
+        (item, index) => {
+
+            const floating =
+                item.querySelector(
+                    ".floating"
+                );
+
+
+            const depth =
+                itemDepths[index];
+
+
+            /*
+               POSICIÓN DEL ITEM EN EL MUNDO
+
+               El item pertenece al escenario,
+               así que viaja con la rotación.
+            */
+
+            item.style.transform =
+                `
+                translateZ(${depth}px)
+                `;
+
+
+            /*
+               CONTRARROTACIÓN
+
+               El mundo gira rotationY.
+
+               El texto gira exactamente
+               lo contrario.
+
+               RESULTADO:
+
+               la flor cambia de posición,
+               pero las letras continúan
+               mirando al usuario.
+
+               Nunca se leen al revés.
+            */
+
+            floating.style.transform =
+                `
+                rotateY(${-rotationY}deg)
+                rotateX(${-rotationX}deg)
+                `;
+
+
+            /*
+               Calculamos si está adelante
+               o atrás para mejorar
+               la sensación de profundidad.
+            */
+
+            const visualDepth =
+                depth
+                * Math.cos(radians);
+
+
+            /*
+               Los elementos que pasan
+               por atrás se ven un poco
+               más tenues.
+            */
+
+            if (
+                visualDepth < -60
+            ) {
+
+                item.style.opacity =
+                    "0.48";
+
+                item.style.filter =
+                    "brightness(.72)";
+
+            }
+
+            else if (
+                visualDepth < 20
+            ) {
+
+                item.style.opacity =
+                    "0.72";
+
+                item.style.filter =
+                    "brightness(.88)";
+
+            }
+
+            else {
+
+                item.style.opacity =
+                    "1";
+
+                item.style.filter =
+                    "brightness(1)";
+            }
+        }
+    );
+}
+
+
+
+/* ==========================================
+   ANIMACIÓN PRINCIPAL
    ========================================== */
 
 function animateWorld() {
 
     /*
-       Interpolación.
-
-       Hace que el movimiento
-       no sea brusco.
+       Movimiento suave
     */
 
     rotationY +=
@@ -731,11 +890,22 @@ function animateWorld() {
         * .12;
 
 
+    /*
+       GIRAMOS EL UNIVERSO
+    */
+
     world.style.transform =
         `
         rotateX(${rotationX}deg)
         rotateY(${rotationY}deg)
         `;
+
+
+    /*
+       CORREGIMOS LAS LETRAS
+    */
+
+    updateItems();
 
 
     requestAnimationFrame(
