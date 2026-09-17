@@ -20,33 +20,22 @@ body {
     background: #030401;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-
     overscroll-behavior: none;
 }
-
-
-/* =========================
-   FONDO
-   ========================= */
 
 #stars {
     position: fixed;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     z-index: 0;
 }
 
 .vignette {
     position: fixed;
     inset: 0;
-
     z-index: 1;
-
     pointer-events: none;
-
     background:
         radial-gradient(
             circle at 50% 52%,
@@ -57,71 +46,52 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    ESCENA
-   ========================= */
+   ========================================= */
 
 .scene {
     position: relative;
-
     width: 100%;
     height: 100%;
-
     z-index: 2;
-
     perspective: 1100px;
-
     overflow: hidden;
 }
 
 
-/* =========================
+/* =========================================
    TÍTULO
-   ========================= */
+   ========================================= */
 
 .title {
     position: absolute;
-
     top: 5%;
     left: 50%;
-
     transform: translateX(-50%);
-
     width: 100%;
-
     text-align: center;
-
-    text-shadow:
-        0 0 15px #ffe72f;
-
+    text-shadow: 0 0 15px #ffe72f;
     z-index: 20;
-
     pointer-events: none;
 }
 
 .title h1 {
     font-size: clamp(25px, 4vw, 42px);
-
     font-weight: 300;
-
     margin-top: 6px;
 }
 
 
-/* =========================
+/* =========================================
    MUNDO 3D
-   ========================= */
+   ========================================= */
 
 .world {
     position: absolute;
-
     inset: 0;
 
     transform-style: preserve-3d;
-
-    transform:
-        rotateX(0deg)
-        rotateY(0deg);
 
     will-change: transform;
 
@@ -137,9 +107,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    CORAZÓN CENTRAL
-   ========================= */
+   ========================================= */
 
 .centerpiece {
     position: absolute;
@@ -176,9 +146,6 @@ body {
         );
 }
 
-
-/* PARTÍCULAS DEL CORAZÓN */
-
 .spark {
     position: absolute;
 
@@ -200,7 +167,9 @@ body {
 }
 
 
-/* NOMBRE */
+/* =========================================
+   NOMBRE CENTRAL
+   ========================================= */
 
 .love {
     position: absolute;
@@ -228,9 +197,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    RAYO DE LUZ
-   ========================= */
+   ========================================= */
 
 .beam {
     position: absolute;
@@ -268,9 +237,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    PORTAL
-   ========================= */
+   ========================================= */
 
 .portal {
     position: absolute;
@@ -294,8 +263,7 @@ body {
 
     inset: 0;
 
-    border:
-        3px solid #fff64d;
+    border: 3px solid #fff64d;
 
     border-radius: 50%;
 
@@ -312,28 +280,35 @@ body {
 
 .portal div:nth-child(2) {
     inset: 14px 25px;
-
     animation-delay: .3s;
 }
 
 .portal div:nth-child(3) {
     inset: 27px 50px;
-
     animation-delay: .6s;
 }
 
 
-/* =========================
-   FLORES Y FRASES
-   ========================= */
+/* =========================================
+   FLORES
+   ========================================= */
 
 .orbit {
     position: absolute;
-
     inset: 0;
-
     transform-style: preserve-3d;
 }
+
+
+/*
+   ITEM = posición dentro del mundo.
+
+   FLOATING = contenido visible.
+
+   Esto permite que JavaScript mueva el item
+   en 3D y al mismo tiempo mantenga la frase
+   mirando hacia la cámara.
+*/
 
 .item {
     position: absolute;
@@ -348,15 +323,15 @@ body {
         0 0 8px #ffdf00;
 
     white-space: nowrap;
+
+    will-change:
+        transform,
+        opacity,
+        filter;
 }
 
 
-/*
-   El movimiento flotante está en
-   .floating y NO en .item.
-
-   Así no interfiere con translateZ.
-*/
+/* CONTENIDO QUE SIEMPRE MIRA AL USUARIO */
 
 .floating {
     display: flex;
@@ -365,11 +340,22 @@ body {
 
     gap: 8px;
 
-    animation:
-        float 3.5s
-        ease-in-out
-        infinite alternate;
+    transform-style: preserve-3d;
+
+    will-change: transform;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
 }
+
+
+/* Animación flotante en un nivel interno */
+
+.floating::after {
+    content: "";
+}
+
 
 .item b {
     font-size:
@@ -383,6 +369,8 @@ body {
         drop-shadow(
             0 0 9px #e9ce00
         );
+
+    display: inline-block;
 }
 
 .item span {
@@ -394,101 +382,63 @@ body {
         );
 
     font-weight: bold;
+
+    display: inline-block;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
 }
 
 
-/* =========================
-   POSICIONES Y PROFUNDIDAD
-   ========================= */
+/* =========================================
+   POSICIONES BASE
+   ========================================= */
 
 .i1 {
     left: 15%;
     top: 25%;
-
-    transform: translateZ(120px);
 }
 
 .i2 {
     left: 8%;
     top: 43%;
-
-    transform: translateZ(-90px);
-}
-
-.i2 .floating {
-    animation-delay: -1s;
 }
 
 .i3 {
     left: 20%;
     top: 64%;
-
-    transform: translateZ(170px);
-}
-
-.i3 .floating {
-    animation-delay: -2s;
 }
 
 .i4 {
     right: 12%;
     top: 29%;
-
-    transform: translateZ(-130px);
-}
-
-.i4 .floating {
-    animation-delay: -.6s;
 }
 
 .i5 {
     right: 8%;
     top: 48%;
-
-    transform: translateZ(100px);
-}
-
-.i5 .floating {
-    animation-delay: -1.6s;
 }
 
 .i6 {
     right: 18%;
     top: 67%;
-
-    transform: translateZ(-160px);
-}
-
-.i6 .floating {
-    animation-delay: -2.4s;
 }
 
 .i7 {
     left: 34%;
     top: 76%;
-
-    transform: translateZ(140px);
-}
-
-.i7 .floating {
-    animation-delay: -.8s;
 }
 
 .i8 {
     right: 35%;
     top: 17%;
-
-    transform: translateZ(-100px);
-}
-
-.i8 .floating {
-    animation-delay: -1.8s;
 }
 
 
-/* =========================
-   INDICACIÓN DESLIZAR
-   ========================= */
+/* =========================================
+   INDICACIÓN
+   ========================================= */
 
 .drag-hint {
     position: absolute;
@@ -522,9 +472,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    BOTÓN
-   ========================= */
+   ========================================= */
 
 #surprise {
     position: absolute;
@@ -584,9 +534,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    CARTA
-   ========================= */
+   ========================================= */
 
 .modal {
     position: fixed;
@@ -738,9 +688,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    LLUVIA
-   ========================= */
+   ========================================= */
 
 .falling {
     position: fixed;
@@ -761,24 +711,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    ANIMACIONES
-   ========================= */
-
-@keyframes float {
-
-    from {
-        transform:
-            translateY(-7px)
-            rotate(-1deg);
-    }
-
-    to {
-        transform:
-            translateY(8px)
-            rotate(2deg);
-    }
-}
+   ========================================= */
 
 @keyframes twinkle {
 
@@ -797,6 +732,7 @@ body {
     }
 }
 
+
 @keyframes pulse {
 
     to {
@@ -808,6 +744,7 @@ body {
     }
 }
 
+
 @keyframes ring {
 
     50% {
@@ -817,6 +754,7 @@ body {
             scale(1.12);
     }
 }
+
 
 @keyframes fall {
 
@@ -832,6 +770,7 @@ body {
     }
 }
 
+
 @keyframes hintPulse {
 
     from {
@@ -844,9 +783,9 @@ body {
 }
 
 
-/* ==================================
-   RESPONSIVE CELULARES
-   ================================== */
+/* =========================================
+   RESPONSIVE CELULAR
+   ========================================= */
 
 @media (max-width: 700px) {
 
@@ -860,6 +799,7 @@ body {
 
         overflow: hidden;
     }
+
 
     .scene {
         width: 100%;
@@ -976,7 +916,7 @@ body {
     }
 
 
-    /* OTROS */
+    /* PARTE INFERIOR */
 
     .i7 {
         left: 22%;
@@ -1049,9 +989,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    CELULARES PEQUEÑOS
-   ========================= */
+   ========================================= */
 
 @media (max-width: 380px) {
 
@@ -1082,9 +1022,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    CELULAR HORIZONTAL
-   ========================= */
+   ========================================= */
 
 @media
 (max-height: 550px)
