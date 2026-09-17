@@ -2,82 +2,43 @@
    FONDO DE ESTRELLAS
    ========================================== */
 
-const canvas =
-    document.getElementById("stars");
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-const ctx =
-    canvas.getContext("2d");
-
-
-let W;
-let H;
+let W, H;
 let particles = [];
 
-
 function resize() {
-
-    W =
-        canvas.width =
-        window.innerWidth;
-
-    H =
-        canvas.height =
-        window.innerHeight;
-
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
     makeStars();
 }
 
-
 function makeStars() {
-
-    particles =
-        Array.from(
-            { length: 180 },
-
-            () => ({
-
-                x:
-                    Math.random() * W,
-
-                y:
-                    Math.random() * H,
-
-                r:
-                    Math.random() * 1.8 + .2,
-
-                a:
-                    Math.random(),
-
-                s:
-                    Math.random() * .012 + .003
-            })
-        );
+    particles = Array.from(
+        { length: 180 },
+        () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.8 + .2,
+            a: Math.random(),
+            s: Math.random() * .012 + .003
+        })
+    );
 }
-
 
 function draw() {
 
-    ctx.clearRect(
+    ctx.clearRect(0, 0, W, H);
+
+    const g = ctx.createRadialGradient(
+        W / 2,
+        H * .5,
         0,
-        0,
-        W,
-        H
+        W / 2,
+        H * .5,
+        Math.max(W, H) * .55
     );
-
-
-    const g =
-        ctx.createRadialGradient(
-
-            W / 2,
-            H * .5,
-            0,
-
-            W / 2,
-            H * .5,
-
-            Math.max(W, H) * .55
-        );
-
 
     g.addColorStop(
         0,
@@ -94,9 +55,7 @@ function draw() {
         "rgba(0,0,0,0)"
     );
 
-
     ctx.fillStyle = g;
-
 
     ctx.fillRect(
         0,
@@ -105,71 +64,49 @@ function draw() {
         H
     );
 
+    particles.forEach(p => {
 
-    particles.forEach(
-        p => {
+        p.a += p.s;
 
-            p.a += p.s;
-
-
-            if (
-                p.a > 1 ||
-                p.a < .1
-            ) {
-
-                p.s *= -1;
-            }
-
-
-            ctx.beginPath();
-
-
-            ctx.fillStyle =
-                `rgba(
-                    255,
-                    235,
-                    72,
-                    ${p.a}
-                )`;
-
-
-            ctx.shadowBlur = 9;
-
-            ctx.shadowColor =
-                "#ffe600";
-
-
-            ctx.arc(
-                p.x,
-                p.y,
-                p.r,
-                0,
-                Math.PI * 2
-            );
-
-
-            ctx.fill();
+        if (
+            p.a > 1 ||
+            p.a < .1
+        ) {
+            p.s *= -1;
         }
-    );
 
+        ctx.beginPath();
 
-    requestAnimationFrame(
-        draw
-    );
+        ctx.fillStyle =
+            `rgba(255,235,72,${p.a})`;
+
+        ctx.shadowBlur = 9;
+
+        ctx.shadowColor =
+            "#ffe600";
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.r,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
 }
 
-
 resize();
-
 
 window.addEventListener(
     "resize",
     resize
 );
 
-
 draw();
-
 
 
 /* ==========================================
@@ -178,7 +115,6 @@ draw();
 
 const heart =
     document.getElementById("heart");
-
 
 for (
     let i = 0;
@@ -191,14 +127,12 @@ for (
         * Math.PI
         * 2;
 
-
     const x =
-        16
-        * Math.pow(
+        16 *
+        Math.pow(
             Math.sin(t),
             3
         );
-
 
     const y =
         13 * Math.cos(t)
@@ -206,14 +140,11 @@ for (
         - 2 * Math.cos(3 * t)
         - Math.cos(4 * t);
 
-
     const s =
         document.createElement("i");
 
-
     s.className =
         "spark";
-
 
     s.style.left =
         (
@@ -223,7 +154,6 @@ for (
         )
         + "px";
 
-
     s.style.top =
         (
             72
@@ -232,17 +162,14 @@ for (
         )
         + "px";
 
-
     s.style.animationDelay =
         (
             Math.random() * 1.5
         )
         + "s";
 
-
     heart.appendChild(s);
 }
-
 
 
 /* ==========================================
@@ -258,26 +185,20 @@ function rain(n = 35) {
     ) {
 
         const e =
-            document.createElement(
-                "span"
-            );
-
+            document.createElement("span");
 
         e.className =
             "falling";
-
 
         e.textContent =
             Math.random() > .5
                 ? "🌻"
                 : "✨";
 
-
         e.style.left =
             Math.random()
             * 100
             + "vw";
-
 
         e.style.fontSize =
             (
@@ -286,7 +207,6 @@ function rain(n = 35) {
             )
             + "px";
 
-
         e.style.animationDuration =
             (
                 4
@@ -294,16 +214,12 @@ function rain(n = 35) {
             )
             + "s";
 
-
         e.style.animationDelay =
             Math.random()
             + "s";
 
-
         e.style.setProperty(
-
             "--drift",
-
             (
                 -90
                 + Math.random() * 180
@@ -311,9 +227,7 @@ function rain(n = 35) {
             + "px"
         );
 
-
         document.body.appendChild(e);
-
 
         setTimeout(
             () => e.remove(),
@@ -323,7 +237,6 @@ function rain(n = 35) {
 }
 
 
-
 /* ==========================================
    CARTA
    ========================================== */
@@ -331,10 +244,8 @@ function rain(n = 35) {
 const modal =
     document.getElementById("modal");
 
-
 const surprise =
     document.getElementById("surprise");
-
 
 const close =
     document.getElementById("close");
@@ -371,7 +282,6 @@ modal.addEventListener(
         if (
             e.target === modal
         ) {
-
             modal.classList.remove(
                 "show"
             );
@@ -387,14 +297,12 @@ document.addEventListener(
         if (
             e.key === "Escape"
         ) {
-
             modal.classList.remove(
                 "show"
             );
         }
     }
 );
-
 
 
 /* ==========================================
@@ -406,90 +314,145 @@ setInterval(
     5000
 );
 
-
 rain(15);
 
 
-
 /* ==========================================
-   SISTEMA 3D
+   GIRO INTERACTIVO
    ========================================== */
 
 const world =
     document.getElementById("world");
 
+const centerpiece =
+    document.querySelector(
+        ".centerpiece"
+    );
 
 const items =
-    [
-        ...document.querySelectorAll(
+    Array.from(
+        document.querySelectorAll(
             ".item"
         )
-    ];
+    );
 
 
 /*
-   PROFUNDIDAD ORIGINAL DE CADA FLOR
+   IMPORTANTE:
 
-   Positivos = delante
-   Negativos = detrás
+   Ya NO rotamos .world.
+
+   El contenedor permanece mirando
+   hacia la pantalla.
+
+   JavaScript mueve individualmente
+   cada flor para simular el giro.
+
+   Así las letras NUNCA quedan
+   de lado ni al revés.
 */
 
-const itemDepths = [
-
-    130,     // i1
-
-    -100,    // i2
-
-    180,     // i3
-
-    -150,    // i4
-
-    110,     // i5
-
-    -180,    // i6
-
-    150,     // i7
-
-    -120     // i8
-];
-
+world.style.transform = "none";
 
 
 /* ==========================================
-   ROTACIÓN
+   CONFIGURACIÓN DE LAS 8 FLORES
+   ========================================== */
+
+/*
+   Cada elemento tiene:
+
+   angle = posición alrededor del escenario
+   radius = distancia horizontal
+   depth = profundidad
+*/
+
+const flowerData = [
+
+    {
+        angle: -55,
+        radius: 90,
+        depth: 130
+    },
+
+    {
+        angle: -115,
+        radius: 110,
+        depth: 150
+    },
+
+    {
+        angle: -155,
+        radius: 85,
+        depth: 170
+    },
+
+    {
+        angle: 55,
+        radius: 100,
+        depth: 140
+    },
+
+    {
+        angle: 105,
+        radius: 115,
+        depth: 160
+    },
+
+    {
+        angle: 150,
+        radius: 95,
+        depth: 180
+    },
+
+    {
+        angle: -20,
+        radius: 75,
+        depth: 120
+    },
+
+    {
+        angle: 20,
+        radius: 80,
+        depth: 130
+    }
+
+];
+
+
+/* ==========================================
+   VARIABLES DEL GIRO
    ========================================== */
 
 let rotationY = 0;
 
-let rotationX = 0;
-
-
 let targetRotationY = 0;
 
-let targetRotationX = 0;
+let tiltX = 0;
 
+let targetTiltX = 0;
 
 let lastX = 0;
 
 let lastY = 0;
 
-
 let dragging = false;
 
 
-
-/* ==========================================
-   SENSIBILIDAD
-   ========================================== */
+/*
+   Sensibilidad del dedo/mouse
+*/
 
 const horizontalSensitivity =
-    0.42;
-
+    0.40;
 
 const verticalSensitivity =
-    0.13;
+    0.08;
 
 
+/* ==========================================
+   LIMITAR VALOR
+   ========================================== */
 
 function limit(
     value,
@@ -498,20 +461,17 @@ function limit(
 ) {
 
     return Math.min(
-
         Math.max(
             value,
             min
         ),
-
         max
     );
 }
 
 
-
 /* ==========================================
-   ARRASTRE
+   INICIAR ARRASTRE
    ========================================== */
 
 function startDrag(
@@ -521,11 +481,9 @@ function startDrag(
 
     dragging = true;
 
-
     lastX = x;
 
     lastY = y;
-
 
     world.classList.add(
         "dragging"
@@ -533,6 +491,9 @@ function startDrag(
 }
 
 
+/* ==========================================
+   MOVER
+   ========================================== */
 
 function moveDrag(
     x,
@@ -540,21 +501,18 @@ function moveDrag(
 ) {
 
     if (!dragging) {
-
         return;
     }
 
-
     const deltaX =
         x - lastX;
-
 
     const deltaY =
         y - lastY;
 
 
     /*
-       GIRO HORIZONTAL LIBRE
+       GIRO HORIZONTAL
     */
 
     targetRotationY +=
@@ -563,22 +521,18 @@ function moveDrag(
 
 
     /*
-       INCLINACIÓN VERTICAL
+       PEQUEÑA INCLINACIÓN VERTICAL
     */
 
-    targetRotationX -=
+    targetTiltX -=
         deltaY
         * verticalSensitivity;
 
-
-    targetRotationX =
+    targetTiltX =
         limit(
-
-            targetRotationX,
-
-            -10,
-
-            10
+            targetTiltX,
+            -7,
+            7
         );
 
 
@@ -588,17 +542,18 @@ function moveDrag(
 }
 
 
+/* ==========================================
+   TERMINAR ARRASTRE
+   ========================================== */
 
 function endDrag() {
 
     dragging = false;
 
-
     world.classList.remove(
         "dragging"
     );
 }
-
 
 
 /* ==========================================
@@ -610,9 +565,7 @@ world.addEventListener(
     e => {
 
         startDrag(
-
             e.clientX,
-
             e.clientY
         );
     }
@@ -624,9 +577,7 @@ window.addEventListener(
     e => {
 
         moveDrag(
-
             e.clientX,
-
             e.clientY
         );
     }
@@ -648,81 +599,62 @@ world.addEventListener(
 );
 
 
-
 /* ==========================================
    CELULAR
    ========================================== */
 
 world.addEventListener(
     "touchstart",
-
     e => {
 
         if (
             e.touches.length !== 1
         ) {
-
             return;
         }
-
 
         const touch =
             e.touches[0];
 
-
         startDrag(
-
             touch.clientX,
-
             touch.clientY
         );
     },
-
     {
         passive: true
     }
 );
 
 
-
 world.addEventListener(
     "touchmove",
-
     e => {
 
         if (
             !dragging ||
             e.touches.length !== 1
         ) {
-
             return;
         }
-
 
         const touch =
             e.touches[0];
 
-
         moveDrag(
-
             touch.clientX,
-
             touch.clientY
         );
     },
-
     {
         passive: true
     }
 );
 
 
-
 world.addEventListener(
     "touchend",
-
     endDrag,
-
     {
         passive: true
     }
@@ -731,36 +663,24 @@ world.addEventListener(
 
 world.addEventListener(
     "touchcancel",
-
     endDrag,
-
     {
         passive: true
     }
 );
 
 
-
 /* ==========================================
    ACTUALIZAR FLORES
    ========================================== */
 
-function updateItems() {
-
-    /*
-       Convertimos el giro actual
-       a radianes para calcular
-       profundidad visual.
-    */
-
-    const radians =
-        rotationY
-        * Math.PI
-        / 180;
-
+function updateFlowers() {
 
     items.forEach(
         (item, index) => {
+
+            const data =
+                flowerData[index];
 
             const floating =
                 item.querySelector(
@@ -768,100 +688,189 @@ function updateItems() {
                 );
 
 
-            const depth =
-                itemDepths[index];
+            /*
+               Ángulo actual de la flor
+            */
+
+            const angle =
+                (
+                    data.angle
+                    + rotationY
+                )
+                * Math.PI
+                / 180;
 
 
             /*
-               POSICIÓN DEL ITEM EN EL MUNDO
+               Movimiento horizontal
+               alrededor del centro
+            */
 
-               El item pertenece al escenario,
-               así que viaja con la rotación.
+            const x =
+                Math.sin(angle)
+                * data.radius;
+
+
+            /*
+               Profundidad
+            */
+
+            const z =
+                Math.cos(angle)
+                * data.depth;
+
+
+            /*
+               Ligero movimiento vertical
+               cuando inclinamos
+            */
+
+            const y =
+                Math.sin(
+                    tiltX
+                    * Math.PI
+                    / 180
+                )
+                * 15;
+
+
+            /*
+               MOVEMOS EL CONTENEDOR.
+
+               OJO:
+
+               NO usamos rotateY aquí.
+
+               Por eso el texto no gira
+               y siempre queda mirando
+               directamente a la pantalla.
             */
 
             item.style.transform =
                 `
-                translateZ(${depth}px)
+                translate3d(
+                    ${x}px,
+                    ${y}px,
+                    ${z}px
+                )
                 `;
 
 
             /*
-               CONTRARROTACIÓN
+               El contenido permanece
+               completamente frontal.
+            */
 
-               El mundo gira rotationY.
+            floating.style.transform =
+                "rotateX(0deg) rotateY(0deg)";
 
-               El texto gira exactamente
-               lo contrario.
 
-               RESULTADO:
+            /*
+               PROFUNDIDAD VISUAL
 
-               la flor cambia de posición,
-               pero las letras continúan
-               mirando al usuario.
+               Adelante:
+               grande y brillante.
 
-               Nunca se leen al revés.
+               Atrás:
+               pequeño y tenue.
+            */
+
+            const normalizedDepth =
+                (
+                    z
+                    + data.depth
+                )
+                /
+                (
+                    data.depth * 2
+                );
+
+
+            const scale =
+                0.82
+                + normalizedDepth
+                * 0.22;
+
+
+            const opacity =
+                0.45
+                + normalizedDepth
+                * 0.55;
+
+
+            /*
+               Aplicamos escala sin
+               rotar las letras.
             */
 
             floating.style.transform =
                 `
-                rotateY(${-rotationY}deg)
-                rotateX(${-rotationX}deg)
+                scale(${scale})
                 `;
 
 
-            /*
-               Calculamos si está adelante
-               o atrás para mejorar
-               la sensación de profundidad.
-            */
-
-            const visualDepth =
-                depth
-                * Math.cos(radians);
+            item.style.opacity =
+                opacity;
 
 
             /*
-               Los elementos que pasan
-               por atrás se ven un poco
-               más tenues.
+               Más brillo cuando
+               está adelante.
             */
 
-            if (
-                visualDepth < -60
-            ) {
+            const brightness =
+                0.72
+                + normalizedDepth
+                * 0.35;
 
-                item.style.opacity =
-                    "0.48";
 
-                item.style.filter =
-                    "brightness(.72)";
-
-            }
-
-            else if (
-                visualDepth < 20
-            ) {
-
-                item.style.opacity =
-                    "0.72";
-
-                item.style.filter =
-                    "brightness(.88)";
-
-            }
-
-            else {
-
-                item.style.opacity =
-                    "1";
-
-                item.style.filter =
-                    "brightness(1)";
-            }
+            item.style.filter =
+                `
+                brightness(
+                    ${brightness}
+                )
+                `;
         }
     );
 }
 
+
+/* ==========================================
+   MOVIMIENTO DEL CORAZÓN
+   ========================================== */
+
+/*
+   El corazón permanece prácticamente
+   en el centro.
+
+   Solo hacemos una inclinación MUY leve
+   para conservar sensación de movimiento.
+
+   No lo volteamos 180 grados.
+*/
+
+function updateCenter() {
+
+    const centerMove =
+        Math.sin(
+            rotationY
+            * Math.PI
+            / 180
+        )
+        * 12;
+
+
+    /*
+       Conservamos la escala responsive
+       mediante CSS.
+
+       Solo desplazamos ligeramente
+       el mundo que contiene el centro.
+    */
+
+    centerpiece.style.marginLeft =
+        centerMove + "px";
+}
 
 
 /* ==========================================
@@ -879,33 +888,33 @@ function animateWorld() {
             targetRotationY
             - rotationY
         )
-        * .12;
+        * .11;
 
 
-    rotationX +=
+    tiltX +=
         (
-            targetRotationX
-            - rotationX
+            targetTiltX
+            - tiltX
         )
-        * .12;
+        * .11;
 
 
     /*
-       GIRAMOS EL UNIVERSO
+       IMPORTANTE:
+
+       WORLD NO ROTA.
+
+       Por eso ninguna frase puede
+       quedar escrita al revés.
     */
 
     world.style.transform =
-        `
-        rotateX(${rotationX}deg)
-        rotateY(${rotationY}deg)
-        `;
+        "none";
 
 
-    /*
-       CORREGIMOS LAS LETRAS
-    */
+    updateFlowers();
 
-    updateItems();
+    updateCenter();
 
 
     requestAnimationFrame(
