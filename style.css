@@ -1,230 +1,1129 @@
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#ffe32e;--soft:#fff38b}
-html,body{width:100%;height:100%;overflow:hidden}
-body{background:#030401;color:white;font-family:Arial,Helvetica,sans-serif}
-#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0}
-.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at 50% 52%,rgba(207,190,0,.10),rgba(0,0,0,.2) 42%,rgba(0,0,0,.82) 100%)}
-.scene{position:relative;width:100%;height:100%;z-index:2;perspective:900px}
-.title{position:absolute;top:5%;left:50%;transform:translateX(-50%);text-align:center;text-shadow:0 0 15px #ffe72f;z-index:8}
-.title span{font-size:10px;letter-spacing:5px;color:#ffe95e}
-.title h1{font-size:clamp(25px,4vw,42px);font-weight:300;margin-top:6px}
-.centerpiece{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:300px;height:430px}
-.heart{position:absolute;left:50%;top:52px;width:170px;height:155px;transform:translateX(-50%);filter:drop-shadow(0 0 10px #ffee25)}
-.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff768;box-shadow:0 0 6px #fff000,0 0 13px #ffd500;animation:twinkle 1.4s ease-in-out infinite alternate}
-.love{position:absolute;top:124px;left:0;width:100%;text-align:center;font-family:Georgia,serif;font-style:italic;font-weight:bold;color:#fffbd2;text-shadow:0 0 10px #ffdf00;font-size:16px}
-.beam{position:absolute;left:50%;top:180px;transform:translateX(-50%);height:105px;width:34px;background:linear-gradient(to bottom,rgba(255,250,165,.8),rgba(255,224,0,.08));filter:blur(8px);clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);animation:pulse 1.8s infinite alternate}
-.portal{position:absolute;top:265px;left:50%;width:180px;height:75px;transform:translateX(-50%) rotateX(68deg)}
-.portal div{position:absolute;inset:0;border:3px solid #fff64d;border-radius:50%;box-shadow:0 0 10px #ffff49,0 0 24px #e7c800,inset 0 0 15px #fff900;animation:ring 2s ease-in-out infinite}
-.portal div:nth-child(2){inset:14px 25px;animation-delay:.3s}.portal div:nth-child(3){inset:27px 50px;animation-delay:.6s}
-.item{position:absolute;display:flex;align-items:center;gap:8px;color:#fffbe3;text-shadow:0 0 8px #ffdf00;white-space:nowrap;animation:float 3.5s ease-in-out infinite alternate;z-index:5}
-.item b{font-size:clamp(27px,4vw,48px);filter:drop-shadow(0 0 9px #e9ce00)}
-.item span{font-size:clamp(11px,1.4vw,16px);font-weight:bold}
-.i1{left:15%;top:25%}.i2{left:8%;top:43%;animation-delay:-1s}.i3{left:20%;top:64%;animation-delay:-2s}.i4{right:12%;top:29%;animation-delay:-.6s}.i5{right:8%;top:48%;animation-delay:-1.6s}.i6{right:18%;top:67%;animation-delay:-2.4s}.i7{left:34%;top:76%;animation-delay:-.8s}.i8{right:35%;top:17%;animation-delay:-1.8s}
-#surprise{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);border:1px solid #ffea52;border-radius:50px;padding:12px 24px;background:rgba(255,225,0,.08);backdrop-filter:blur(7px);color:#fff7a2;box-shadow:0 0 20px rgba(255,223,0,.2);cursor:pointer;letter-spacing:1px;transition:.25s}
-#surprise:hover{background:#ffe32e;color:#282000;box-shadow:0 0 35px #ffd900}
-.modal{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.35s}
-.modal.show{opacity:1;visibility:visible}
-.letter{position:relative;width:min(510px,95vw);padding:38px;text-align:center;border:1px solid rgba(255,235,77,.55);border-radius:24px;background:linear-gradient(145deg,#161504,#050500);box-shadow:0 0 60px rgba(255,221,0,.2);transform:scale(.9);transition:.35s}
-.show .letter{transform:scale(1)}.letter button{position:absolute;right:14px;top:10px;background:none;border:0;color:#fff584;font-size:28px;cursor:pointer}.sunflower{font-size:55px}.letter small{display:block;color:#ffe85a;letter-spacing:3px;margin:8px}.letter h2{font-family:Georgia,serif;font-style:italic;font-size:38px;color:#fff9b0;margin:12px}.letter p{color:#e9e5c6;line-height:1.7;font-size:14px;margin:12px}.letter strong{display:block;color:#ffe653;margin-top:20px}
-.falling{position:fixed;top:-30px;z-index:20;pointer-events:none;animation:fall linear forwards;filter:drop-shadow(0 0 6px #ffe000)}
-@keyframes float{from{transform:translateY(-7px) rotate(-1deg)}to{transform:translateY(8px) rotate(2deg)}}
-@keyframes twinkle{from{opacity:.25;transform:scale(.5)}to{opacity:1;transform:scale(1.5)}}
-@keyframes pulse{to{opacity:.45;transform:translateX(-50%) scaleX(1.3)}}
-@keyframes ring{50%{opacity:.35;transform:scale(1.12)}}
-@keyframes fall{to{transform:translate(var(--drift),110vh) rotate(600deg);opacity:.15}}
-/* ==============================
-   RESPONSIVE PARA CELULARES
-   ============================== */
-@media (max-width: 700px) {
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  html, body {
+:root {
+    --gold: #ffe32e;
+    --soft: #fff38b;
+}
+
+html,
+body {
     width: 100%;
     height: 100%;
-    min-height: 100dvh;
     overflow: hidden;
-  }
-
-  .scene {
-    width: 100%;
-    height: 100dvh;
-    min-height: 600px;
-  }
-
-  /* TÍTULO */
-  .title {
-    top: 3%;
-    width: 100%;
-    padding: 0 15px;
-  }
-
-  .title span {
-    font-size: 8px;
-    letter-spacing: 3px;
-  }
-
-  .title h1 {
-    font-size: 27px;
-    margin-top: 5px;
-  }
-
-  /* CORAZÓN Y PORTAL CENTRAL */
-  .centerpiece {
-    top: 47%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(.68);
-    transform-origin: center;
-  }
-
-  /* FRASES Y FLORES */
-  .item {
-    flex-direction: column;
-    gap: 3px;
-    text-align: center;
-    max-width: 90px;
-  }
-
-  .item b {
-    font-size: 27px;
-  }
-
-  .item span {
-    font-size: 9px;
-    white-space: normal;
-    line-height: 1.2;
-  }
-
-  /* LADO IZQUIERDO */
-  .i1 {
-    left: 4%;
-    top: 19%;
-  }
-
-  .i2 {
-    left: 3%;
-    top: 39%;
-  }
-
-  .i3 {
-    left: 5%;
-    top: 62%;
-  }
-
-  /* LADO DERECHO */
-  .i4 {
-    right: 4%;
-    top: 20%;
-  }
-
-  .i5 {
-    right: 3%;
-    top: 40%;
-  }
-
-  .i6 {
-    right: 4%;
-    top: 62%;
-  }
-
-  /* PARTE INFERIOR */
-  .i7 {
-    left: 22%;
-    top: 73%;
-  }
-
-  .i8 {
-    right: 22%;
-    top: 13%;
-  }
-
-  /* BOTÓN */
-  #surprise {
-    bottom: 3%;
-    padding: 11px 20px;
-    font-size: 12px;
-    z-index: 15;
-  }
-
-  /* CARTA */
-  .modal {
-    padding: 15px;
-  }
-
-  .letter {
-    width: 94vw;
-    max-height: 88dvh;
-    overflow-y: auto;
-    padding: 30px 20px 25px;
-    border-radius: 20px;
-  }
-
-  .sunflower {
-    font-size: 45px;
-  }
-
-  .letter h2 {
-    font-size: 31px;
-  }
-
-  .letter p {
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .letter strong {
-    font-size: 13px;
-  }
 }
 
-/* CELULARES PEQUEÑOS */
+body {
+    background: #030401;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+
+    overscroll-behavior: none;
+}
+
+
+/* =========================
+   FONDO
+   ========================= */
+
+#stars {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+}
+
+.vignette {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 52%,
+            rgba(207, 190, 0, .10),
+            rgba(0, 0, 0, .2) 42%,
+            rgba(0, 0, 0, .82) 100%
+        );
+}
+
+
+/* =========================
+   ESCENA
+   ========================= */
+
+.scene {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 2;
+
+    perspective: 1100px;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   TÍTULO
+   ========================= */
+
+.title {
+    position: absolute;
+
+    top: 5%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    text-align: center;
+
+    text-shadow:
+        0 0 15px #ffe72f;
+
+    z-index: 20;
+
+    pointer-events: none;
+}
+
+.title h1 {
+    font-size: clamp(25px, 4vw, 42px);
+
+    font-weight: 300;
+
+    margin-top: 6px;
+}
+
+
+/* =========================
+   MUNDO 3D
+   ========================= */
+
+.world {
+    position: absolute;
+
+    inset: 0;
+
+    transform-style: preserve-3d;
+
+    transform:
+        rotateX(0deg)
+        rotateY(0deg);
+
+    will-change: transform;
+
+    cursor: grab;
+
+    touch-action: none;
+
+    user-select: none;
+}
+
+.world.dragging {
+    cursor: grabbing;
+}
+
+
+/* =========================
+   CORAZÓN CENTRAL
+   ========================= */
+
+.centerpiece {
+    position: absolute;
+
+    left: 50%;
+    top: 47%;
+
+    width: 300px;
+    height: 430px;
+
+    transform:
+        translate(-50%, -50%)
+        translateZ(20px);
+
+    transform-style: preserve-3d;
+}
+
+.heart {
+    position: absolute;
+
+    left: 50%;
+    top: 52px;
+
+    width: 170px;
+    height: 155px;
+
+    transform:
+        translateX(-50%)
+        translateZ(30px);
+
+    filter:
+        drop-shadow(
+            0 0 10px #ffee25
+        );
+}
+
+
+/* PARTÍCULAS DEL CORAZÓN */
+
+.spark {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #fff768;
+
+    box-shadow:
+        0 0 6px #fff000,
+        0 0 13px #ffd500;
+
+    animation:
+        twinkle 1.4s
+        ease-in-out
+        infinite alternate;
+}
+
+
+/* NOMBRE */
+
+.love {
+    position: absolute;
+
+    top: 124px;
+    left: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-family: Georgia, serif;
+
+    font-style: italic;
+    font-weight: bold;
+
+    color: #fffbd2;
+
+    text-shadow:
+        0 0 10px #ffdf00;
+
+    font-size: 16px;
+
+    transform: translateZ(50px);
+}
+
+
+/* =========================
+   RAYO DE LUZ
+   ========================= */
+
+.beam {
+    position: absolute;
+
+    left: 50%;
+    top: 180px;
+
+    height: 105px;
+    width: 34px;
+
+    transform:
+        translateX(-50%)
+        translateZ(10px);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 250, 165, .8),
+            rgba(255, 224, 0, .08)
+        );
+
+    filter: blur(8px);
+
+    clip-path:
+        polygon(
+            38% 0,
+            62% 0,
+            100% 100%,
+            0 100%
+        );
+
+    animation:
+        pulse 1.8s
+        infinite alternate;
+}
+
+
+/* =========================
+   PORTAL
+   ========================= */
+
+.portal {
+    position: absolute;
+
+    top: 265px;
+    left: 50%;
+
+    width: 180px;
+    height: 75px;
+
+    transform:
+        translateX(-50%)
+        rotateX(68deg)
+        translateZ(20px);
+
+    transform-style: preserve-3d;
+}
+
+.portal div {
+    position: absolute;
+
+    inset: 0;
+
+    border:
+        3px solid #fff64d;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 10px #ffff49,
+        0 0 24px #e7c800,
+        inset 0 0 15px #fff900;
+
+    animation:
+        ring 2s
+        ease-in-out
+        infinite;
+}
+
+.portal div:nth-child(2) {
+    inset: 14px 25px;
+
+    animation-delay: .3s;
+}
+
+.portal div:nth-child(3) {
+    inset: 27px 50px;
+
+    animation-delay: .6s;
+}
+
+
+/* =========================
+   FLORES Y FRASES
+   ========================= */
+
+.orbit {
+    position: absolute;
+
+    inset: 0;
+
+    transform-style: preserve-3d;
+}
+
+.item {
+    position: absolute;
+
+    z-index: 5;
+
+    transform-style: preserve-3d;
+
+    color: #fffbe3;
+
+    text-shadow:
+        0 0 8px #ffdf00;
+
+    white-space: nowrap;
+}
+
+
+/*
+   El movimiento flotante está en
+   .floating y NO en .item.
+
+   Así no interfiere con translateZ.
+*/
+
+.floating {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    animation:
+        float 3.5s
+        ease-in-out
+        infinite alternate;
+}
+
+.item b {
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            48px
+        );
+
+    filter:
+        drop-shadow(
+            0 0 9px #e9ce00
+        );
+}
+
+.item span {
+    font-size:
+        clamp(
+            11px,
+            1.4vw,
+            16px
+        );
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   POSICIONES Y PROFUNDIDAD
+   ========================= */
+
+.i1 {
+    left: 15%;
+    top: 25%;
+
+    transform: translateZ(120px);
+}
+
+.i2 {
+    left: 8%;
+    top: 43%;
+
+    transform: translateZ(-90px);
+}
+
+.i2 .floating {
+    animation-delay: -1s;
+}
+
+.i3 {
+    left: 20%;
+    top: 64%;
+
+    transform: translateZ(170px);
+}
+
+.i3 .floating {
+    animation-delay: -2s;
+}
+
+.i4 {
+    right: 12%;
+    top: 29%;
+
+    transform: translateZ(-130px);
+}
+
+.i4 .floating {
+    animation-delay: -.6s;
+}
+
+.i5 {
+    right: 8%;
+    top: 48%;
+
+    transform: translateZ(100px);
+}
+
+.i5 .floating {
+    animation-delay: -1.6s;
+}
+
+.i6 {
+    right: 18%;
+    top: 67%;
+
+    transform: translateZ(-160px);
+}
+
+.i6 .floating {
+    animation-delay: -2.4s;
+}
+
+.i7 {
+    left: 34%;
+    top: 76%;
+
+    transform: translateZ(140px);
+}
+
+.i7 .floating {
+    animation-delay: -.8s;
+}
+
+.i8 {
+    right: 35%;
+    top: 17%;
+
+    transform: translateZ(-100px);
+}
+
+.i8 .floating {
+    animation-delay: -1.8s;
+}
+
+
+/* =========================
+   INDICACIÓN DESLIZAR
+   ========================= */
+
+.drag-hint {
+    position: absolute;
+
+    left: 50%;
+    bottom: 11%;
+
+    transform:
+        translateX(-50%);
+
+    color:
+        rgba(
+            255,
+            245,
+            145,
+            .60
+        );
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    pointer-events: none;
+
+    z-index: 15;
+
+    animation:
+        hintPulse 2s
+        ease-in-out
+        infinite alternate;
+}
+
+
+/* =========================
+   BOTÓN
+   ========================= */
+
+#surprise {
+    position: absolute;
+
+    bottom: 5%;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border:
+        1px solid #ffea52;
+
+    border-radius: 50px;
+
+    padding:
+        12px 24px;
+
+    background:
+        rgba(
+            255,
+            225,
+            0,
+            .08
+        );
+
+    backdrop-filter:
+        blur(7px);
+
+    color: #fff7a2;
+
+    box-shadow:
+        0 0 20px
+        rgba(
+            255,
+            223,
+            0,
+            .2
+        );
+
+    cursor: pointer;
+
+    letter-spacing: 1px;
+
+    transition: .25s;
+
+    z-index: 20;
+}
+
+#surprise:hover {
+    background: #ffe32e;
+
+    color: #282000;
+
+    box-shadow:
+        0 0 35px #ffd900;
+}
+
+
+/* =========================
+   CARTA
+   ========================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 30;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .72
+        );
+
+    backdrop-filter:
+        blur(10px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .35s;
+}
+
+.modal.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.letter {
+    position: relative;
+
+    width:
+        min(
+            510px,
+            95vw
+        );
+
+    padding: 38px;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            235,
+            77,
+            .55
+        );
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #161504,
+            #050500
+        );
+
+    box-shadow:
+        0 0 60px
+        rgba(
+            255,
+            221,
+            0,
+            .2
+        );
+
+    transform: scale(.9);
+
+    transition: .35s;
+}
+
+.show .letter {
+    transform: scale(1);
+}
+
+.letter button {
+    position: absolute;
+
+    right: 14px;
+    top: 10px;
+
+    background: none;
+
+    border: 0;
+
+    color: #fff584;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+.sunflower {
+    font-size: 55px;
+}
+
+.letter small {
+    display: block;
+
+    color: #ffe85a;
+
+    letter-spacing: 3px;
+
+    margin: 8px;
+}
+
+.letter h2 {
+    font-family:
+        Georgia,
+        serif;
+
+    font-style: italic;
+
+    font-size: 38px;
+
+    color: #fff9b0;
+
+    margin: 12px;
+}
+
+.letter p {
+    color: #e9e5c6;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+
+    margin: 12px;
+}
+
+.letter strong {
+    display: block;
+
+    color: #ffe653;
+
+    margin-top: 20px;
+}
+
+
+/* =========================
+   LLUVIA
+   ========================= */
+
+.falling {
+    position: fixed;
+
+    top: -30px;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    animation:
+        fall linear forwards;
+
+    filter:
+        drop-shadow(
+            0 0 6px #ffe000
+        );
+}
+
+
+/* =========================
+   ANIMACIONES
+   ========================= */
+
+@keyframes float {
+
+    from {
+        transform:
+            translateY(-7px)
+            rotate(-1deg);
+    }
+
+    to {
+        transform:
+            translateY(8px)
+            rotate(2deg);
+    }
+}
+
+@keyframes twinkle {
+
+    from {
+        opacity: .25;
+
+        transform:
+            scale(.5);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1.5);
+    }
+}
+
+@keyframes pulse {
+
+    to {
+        opacity: .45;
+
+        transform:
+            translateX(-50%)
+            scaleX(1.3);
+    }
+}
+
+@keyframes ring {
+
+    50% {
+        opacity: .35;
+
+        transform:
+            scale(1.12);
+    }
+}
+
+@keyframes fall {
+
+    to {
+        transform:
+            translate(
+                var(--drift),
+                110vh
+            )
+            rotate(600deg);
+
+        opacity: .15;
+    }
+}
+
+@keyframes hintPulse {
+
+    from {
+        opacity: .35;
+    }
+
+    to {
+        opacity: .9;
+    }
+}
+
+
+/* ==================================
+   RESPONSIVE CELULARES
+   ================================== */
+
+@media (max-width: 700px) {
+
+    html,
+    body {
+        width: 100%;
+
+        height: 100%;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+    }
+
+    .scene {
+        width: 100%;
+
+        height: 100dvh;
+
+        min-height: 600px;
+
+        perspective: 800px;
+    }
+
+
+    /* TÍTULO */
+
+    .title {
+        top: 3%;
+
+        width: 100%;
+
+        padding:
+            0 15px;
+    }
+
+    .title h1 {
+        font-size: 27px;
+
+        margin-top: 5px;
+    }
+
+
+    /* CENTRO */
+
+    .centerpiece {
+        top: 47%;
+
+        left: 50%;
+
+        transform:
+            translate(-50%, -50%)
+            translateZ(20px)
+            scale(.68);
+
+        transform-origin:
+            center;
+    }
+
+
+    /* FLORES */
+
+    .floating {
+        flex-direction: column;
+
+        gap: 3px;
+
+        text-align: center;
+    }
+
+    .item {
+        max-width: 90px;
+    }
+
+    .item b {
+        font-size: 27px;
+    }
+
+    .item span {
+        display: block;
+
+        width: 90px;
+
+        font-size: 9px;
+
+        white-space: normal;
+
+        line-height: 1.2;
+
+        text-align: center;
+    }
+
+
+    /* IZQUIERDA */
+
+    .i1 {
+        left: 4%;
+        top: 19%;
+    }
+
+    .i2 {
+        left: 3%;
+        top: 39%;
+    }
+
+    .i3 {
+        left: 5%;
+        top: 62%;
+    }
+
+
+    /* DERECHA */
+
+    .i4 {
+        right: 4%;
+        top: 20%;
+    }
+
+    .i5 {
+        right: 3%;
+        top: 40%;
+    }
+
+    .i6 {
+        right: 4%;
+        top: 62%;
+    }
+
+
+    /* OTROS */
+
+    .i7 {
+        left: 22%;
+        top: 73%;
+    }
+
+    .i8 {
+        right: 22%;
+        top: 13%;
+    }
+
+
+    /* INDICADOR */
+
+    .drag-hint {
+        bottom: 10%;
+
+        font-size: 8px;
+    }
+
+
+    /* BOTÓN */
+
+    #surprise {
+        bottom: 3%;
+
+        padding:
+            11px 20px;
+
+        font-size: 12px;
+    }
+
+
+    /* CARTA */
+
+    .modal {
+        padding: 15px;
+    }
+
+    .letter {
+        width: 94vw;
+
+        max-height: 88dvh;
+
+        overflow-y: auto;
+
+        padding:
+            30px 20px 25px;
+
+        border-radius: 20px;
+    }
+
+    .sunflower {
+        font-size: 45px;
+    }
+
+    .letter h2 {
+        font-size: 31px;
+    }
+
+    .letter p {
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+    .letter strong {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================
+   CELULARES PEQUEÑOS
+   ========================= */
+
 @media (max-width: 380px) {
 
-  .centerpiece {
-    transform: translate(-50%, -50%) scale(.60);
-  }
+    .centerpiece {
+        transform:
+            translate(-50%, -50%)
+            translateZ(20px)
+            scale(.60);
+    }
 
-  .item b {
-    font-size: 24px;
-  }
+    .item b {
+        font-size: 24px;
+    }
 
-  .item span {
-    font-size: 8px;
-  }
+    .item span {
+        width: 75px;
 
-  .i7 {
-    left: 18%;
-  }
+        font-size: 8px;
+    }
 
-  .i8 {
-    right: 18%;
-  }
+    .i7 {
+        left: 18%;
+    }
+
+    .i8 {
+        right: 18%;
+    }
 }
 
-/* CELULAR EN HORIZONTAL */
-@media (max-height: 550px) and (orientation: landscape) {
 
-  .centerpiece {
-    top: 50%;
-    transform: translate(-50%, -50%) scale(.52);
-  }
+/* =========================
+   CELULAR HORIZONTAL
+   ========================= */
 
-  .title {
-    top: 2%;
-  }
+@media
+(max-height: 550px)
+and
+(orientation: landscape) {
 
-  .title h1 {
-    font-size: 21px;
-  }
+    .centerpiece {
+        top: 50%;
 
-  .item b {
-    font-size: 21px;
-  }
+        transform:
+            translate(-50%, -50%)
+            translateZ(20px)
+            scale(.52);
+    }
 
-  .item span {
-    font-size: 8px;
-  }
+    .title {
+        top: 2%;
+    }
 
-  #surprise {
-    bottom: 2%;
-    padding: 8px 16px;
-  }
+    .title h1 {
+        font-size: 21px;
+    }
+
+    .item b {
+        font-size: 21px;
+    }
+
+    .item span {
+        font-size: 8px;
+    }
+
+    .drag-hint {
+        display: none;
+    }
+
+    #surprise {
+        bottom: 2%;
+
+        padding:
+            8px 16px;
+    }
 }
