@@ -32,9 +32,199 @@ body{background:#030401;color:white;font-family:Arial,Helvetica,sans-serif}
 @keyframes pulse{to{opacity:.45;transform:translateX(-50%) scaleX(1.3)}}
 @keyframes ring{50%{opacity:.35;transform:scale(1.12)}}
 @keyframes fall{to{transform:translate(var(--drift),110vh) rotate(600deg);opacity:.15}}
-@media(max-width:700px){
- .title{top:4%}.centerpiece{top:45%;transform:translate(-50%,-50%) scale(.8)}
- .item{flex-direction:column;gap:2px;text-align:center}.item b{font-size:30px}.item span{font-size:10px}
- .i1{left:5%;top:20%}.i2{left:3%;top:43%}.i3{left:8%;top:67%}.i4{right:4%;top:22%}.i5{right:3%;top:43%}.i6{right:5%;top:68%}.i7{left:31%;top:77%}.i8{right:32%;top:14%}
- #surprise{bottom:3%}.letter{padding:32px 22px}
+/* ==============================
+   RESPONSIVE PARA CELULARES
+   ============================== */
+@media (max-width: 700px) {
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .scene {
+    width: 100%;
+    height: 100dvh;
+    min-height: 600px;
+  }
+
+  /* TÍTULO */
+  .title {
+    top: 3%;
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .title span {
+    font-size: 8px;
+    letter-spacing: 3px;
+  }
+
+  .title h1 {
+    font-size: 27px;
+    margin-top: 5px;
+  }
+
+  /* CORAZÓN Y PORTAL CENTRAL */
+  .centerpiece {
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.68);
+    transform-origin: center;
+  }
+
+  /* FRASES Y FLORES */
+  .item {
+    flex-direction: column;
+    gap: 3px;
+    text-align: center;
+    max-width: 90px;
+  }
+
+  .item b {
+    font-size: 27px;
+  }
+
+  .item span {
+    font-size: 9px;
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+  /* LADO IZQUIERDO */
+  .i1 {
+    left: 4%;
+    top: 19%;
+  }
+
+  .i2 {
+    left: 3%;
+    top: 39%;
+  }
+
+  .i3 {
+    left: 5%;
+    top: 62%;
+  }
+
+  /* LADO DERECHO */
+  .i4 {
+    right: 4%;
+    top: 20%;
+  }
+
+  .i5 {
+    right: 3%;
+    top: 40%;
+  }
+
+  .i6 {
+    right: 4%;
+    top: 62%;
+  }
+
+  /* PARTE INFERIOR */
+  .i7 {
+    left: 22%;
+    top: 73%;
+  }
+
+  .i8 {
+    right: 22%;
+    top: 13%;
+  }
+
+  /* BOTÓN */
+  #surprise {
+    bottom: 3%;
+    padding: 11px 20px;
+    font-size: 12px;
+    z-index: 15;
+  }
+
+  /* CARTA */
+  .modal {
+    padding: 15px;
+  }
+
+  .letter {
+    width: 94vw;
+    max-height: 88dvh;
+    overflow-y: auto;
+    padding: 30px 20px 25px;
+    border-radius: 20px;
+  }
+
+  .sunflower {
+    font-size: 45px;
+  }
+
+  .letter h2 {
+    font-size: 31px;
+  }
+
+  .letter p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .letter strong {
+    font-size: 13px;
+  }
+}
+
+/* CELULARES PEQUEÑOS */
+@media (max-width: 380px) {
+
+  .centerpiece {
+    transform: translate(-50%, -50%) scale(.60);
+  }
+
+  .item b {
+    font-size: 24px;
+  }
+
+  .item span {
+    font-size: 8px;
+  }
+
+  .i7 {
+    left: 18%;
+  }
+
+  .i8 {
+    right: 18%;
+  }
+}
+
+/* CELULAR EN HORIZONTAL */
+@media (max-height: 550px) and (orientation: landscape) {
+
+  .centerpiece {
+    top: 50%;
+    transform: translate(-50%, -50%) scale(.52);
+  }
+
+  .title {
+    top: 2%;
+  }
+
+  .title h1 {
+    font-size: 21px;
+  }
+
+  .item b {
+    font-size: 21px;
+  }
+
+  .item span {
+    font-size: 8px;
+  }
+
+  #surprise {
+    bottom: 2%;
+    padding: 8px 16px;
+  }
 }
